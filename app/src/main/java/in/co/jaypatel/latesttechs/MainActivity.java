@@ -165,7 +165,12 @@ public class MainActivity extends AppCompatActivity {
         protected Integer doInBackground(Integer... params) {
             int id = params[0];
             ListItem item = ListItemDatabase.getDatabase(MainActivity.this).listItemDao().getListItemById(id);
-            int res = ListItemDatabase.getDatabase(MainActivity.this).listItemDao().deleteItem(item);
+            int res;
+            if(item != null) {
+                res = ListItemDatabase.getDatabase(MainActivity.this).listItemDao().deleteItem(item);
+            }else {
+                res = -1;
+            }
             return res;
         }
 
@@ -175,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             if(res > 0) {
                 Toast.makeText(MainActivity.this, "Data Deleted Successfully!", Toast.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(MainActivity.this, "Error in deleting data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "No data found to be delete", Toast.LENGTH_SHORT).show();
             }
             refreshData();
         }
